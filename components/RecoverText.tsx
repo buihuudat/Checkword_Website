@@ -10,31 +10,12 @@ declare global {
   }
 }
 
-const RecoverText = ({ setWord }: { setWord: (word: string) => void }) => {
-  const [recognizedText, setRecognizedText] = useState<string>("");
-  const [isListening, setIsListening] = useState<boolean>(false);
+type Props = {
+  startSpeechRecognition: () => void;
+  isListening: boolean;
+};
 
-  const startSpeechRecognition = () => {
-    const recognition = new window.webkitSpeechRecognition();
-
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
-
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setRecognizedText(transcript);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
-    recognition.start();
-  };
-  setWord(recognizedText);
-  console.log(recognizedText);
-
+const RecoverText = ({ startSpeechRecognition, isListening }: Props) => {
   return (
     <Button
       className="rounded-full h-[60px] w-[60px] bg-sky-400 hover:bg-sky-600 m-5"
