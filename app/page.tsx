@@ -5,7 +5,7 @@ import RecoverText from "@/components/RecoverText";
 import TextRandom from "@/components/TextRandom";
 import WordCheck from "@/components/WordCheck";
 import { faker } from "@faker-js/faker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [text, setText] = useState(faker.word.adjective());
@@ -60,8 +60,11 @@ export default function Home() {
     const newText = faker.word.adjective();
     setText(newText);
     setWordToCheck("");
-    dictionaryApi(newText);
   };
+
+  useEffect(() => {
+    dictionaryApi(text);
+  }, [text]);
 
   const dictionaryApi = (text: string) => {
     let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`;
@@ -71,7 +74,6 @@ export default function Home() {
         setDictionary(result[0]?.phonetic);
         setAudio(result[0].phonetics[0].audio ?? []);
         setMeans(result[0].meanings ?? []);
-        console.log(result[0]);
       })
       .catch((err) => console.log(err));
   };
