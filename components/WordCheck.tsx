@@ -1,3 +1,6 @@
+import { PlayCircle } from "lucide-react";
+import { Button } from "./ui/button";
+
 const WordCheck = ({
   currentWord,
   wordToCheck,
@@ -16,6 +19,11 @@ const WordCheck = ({
       <div>
         Word to Check:{" "}
         <span className="text-xl font-semibold">{wordToCheck}</span>
+        {wordToCheck && (
+          <Button className="bg-transparent hover:bg-transparent">
+            <PlayCircle className="h-[30px] w-[30px] text-purple-500" />
+          </Button>
+        )}
       </div>
       <div>
         Similarity Percentage:{" "}

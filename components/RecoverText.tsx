@@ -1,7 +1,7 @@
 "use client";
 
 import { Mic } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "./ui/button";
 
 declare global {

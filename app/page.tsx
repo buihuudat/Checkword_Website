@@ -2,6 +2,7 @@
 
 import Means from "@/components/Means";
 import RecoverText from "@/components/RecoverText";
+import RecoverText2 from "@/components/RecoverText2";
 import TextRandom from "@/components/TextRandom";
 import WordCheck from "@/components/WordCheck";
 import { faker } from "@faker-js/faker";
@@ -30,7 +31,6 @@ export default function Home() {
     recognition.onend = () => {
       setIsListening(false);
     };
-
     recognition.start();
   };
 
@@ -42,6 +42,12 @@ export default function Home() {
         similarity++;
       }
     }
+    const inDictionary = (word: string) => dictionary?.includes(word);
+
+    if (!inDictionary(word1) || !inDictionary(word2)) {
+      similarity *= 1;
+    }
+
     return (similarity / maxLength) * 100;
   };
 
@@ -60,6 +66,9 @@ export default function Home() {
     const newText = faker.word.adjective();
     setText(newText);
     setWordToCheck("");
+    setMeans([]);
+    setAudio("");
+    setIsListening(false);
   };
 
   useEffect(() => {
@@ -72,7 +81,7 @@ export default function Home() {
       .then((res) => res.json())
       .then((result) => {
         setDictionary(result[0]?.phonetic);
-        setAudio(result[0].phonetics[0].audio ?? []);
+        setAudio(result[0].phonetics[0].audio ?? "");
         setMeans(result[0].meanings ?? []);
       })
       .catch((err) => console.log(err));
@@ -86,9 +95,9 @@ export default function Home() {
         dictionary={dictionary}
         currentAudio={audio}
       />
-      <RecoverText
+      <RecoverText2
         startSpeechRecognition={startSpeechRecognition}
-        isListening={isListening}
+        // setText={setWordToCheck}
       />
       <WordCheck
         currentWord={text}

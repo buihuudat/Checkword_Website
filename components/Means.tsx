@@ -2,7 +2,7 @@ import React from "react";
 
 const Means = ({ means }: { means: any[] }) => {
   return (
-    <div>
+    <div className="p-5">
       {means.map((mean, index) => (
         <div key={index}>
           <div className="flex space-x-3 items-start flex-col mb-3">
